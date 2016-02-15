@@ -31,6 +31,7 @@ public abstract class Details implements Serializable{
     }
     
     public void setTitle(String title) {
+        System.err.println("setTitle: "+title);
         this.title = title;
     }
     
@@ -39,6 +40,7 @@ public abstract class Details implements Serializable{
     }
     
     public void setDescription(String description) {
+        System.err.println("setDescription: "+description);
         this.description = description;
     }
     
