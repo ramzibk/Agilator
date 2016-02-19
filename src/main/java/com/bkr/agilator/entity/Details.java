@@ -6,7 +6,11 @@
 package com.bkr.agilator.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,13 +22,46 @@ import javax.persistence.TemporalType;
 @MappedSuperclass
 public abstract class Details implements Serializable{
 
+    protected Long id;
+
+    /**
+     * title is a text value with maximum 60 characters
+     */
     protected String title;
-    protected String description;
-    protected Date startTime;
-    protected Date endTime;
-    protected Long duration;
     
+    /**
+     * description is a long text value with maximum 400 characters
+     */
+    protected String description;
+    
+    /**
+     * startTime is a local date-time value set automatically on user request
+     */
+    protected LocalDateTime startTime;
+    
+    /**
+     * endTime is a local date-time value set automatically on user request
+     */
+    protected LocalDateTime endTime;
+    
+    /**
+     * A user estimated duration 
+     * This is a positive value representing an amount of time in Seconds
+     * The real duration can be calculated using startTime and endTime values
+     */
+    protected long duration; // estimated duration in Seconds
+
 // <editor-fold defaultstate="collapsed" desc=" Getters and Setters ">
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     public String getTitle() {
         return title;
@@ -44,29 +81,29 @@ public abstract class Details implements Serializable{
         this.description = description;
     }
     
-    @Temporal(value = TemporalType.TIMESTAMP)
-    public Date getStartTime() {
+    @Column
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    public Date getEndTime() {
+    @Column
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
     
-    public Long getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
