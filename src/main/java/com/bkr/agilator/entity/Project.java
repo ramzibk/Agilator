@@ -24,8 +24,6 @@ public class Project extends Details implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private Long id;
-
     private List<Task> tasks;
     
     //<editor-fold defaultstate="collapsed" desc="Constructors">
@@ -35,7 +33,10 @@ public class Project extends Details implements Serializable {
         this.description = description;
         this.duration = duration;
     }
-    
+    public Project(Long id){
+        this();
+        this.id = id;
+    }
     public Project(){
         tasks = new ArrayList();
     }
@@ -43,11 +44,7 @@ public class Project extends Details implements Serializable {
 
     
     // <editor-fold defaultstate="collapsed" desc=" Getters and Setters ">    
-
-    /**
-     * returns associated tasks
-     * @return the associated list of tasks
-     */
+    
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
     public List<Task> getTasks() {
         return this.tasks;
@@ -56,20 +53,9 @@ public class Project extends Details implements Serializable {
     public void setTasks(List tasks) {    
         this.tasks = tasks;
     }
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
 
 // </editor-fold>
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
