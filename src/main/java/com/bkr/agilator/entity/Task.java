@@ -19,8 +19,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Task extends Details implements Serializable {
     
-    Long id;
-    
     private Project project;
     
     public Task(Project project, Long duration, String description){
@@ -31,15 +29,6 @@ public class Task extends Details implements Serializable {
     }
     
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
     
     @ManyToOne
     public Project getProject() {
