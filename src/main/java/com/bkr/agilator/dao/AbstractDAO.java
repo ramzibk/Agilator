@@ -52,7 +52,7 @@ public abstract class AbstractDAO <T> implements I_DAO<T>{
     }
 
     @Override
-    public T update(T o) {
+    public T merge(T o) {
         return em.merge(o);
     }
 
@@ -70,4 +70,7 @@ public abstract class AbstractDAO <T> implements I_DAO<T>{
         return query.getResultList();
     }
     
+    public void flush(){
+        em.flush();
+    }
 }

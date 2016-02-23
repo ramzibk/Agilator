@@ -18,9 +18,11 @@ public interface I_DAO<T> {
     
     T find(Long id);
     
-    T update(T o);
+    T merge(T o);
     
     void delete(T o);
     
     List findAll();
+    
+    void flush();
 }
