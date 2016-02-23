@@ -26,20 +26,17 @@ import org.junit.Test;
 public class ProjectDAOTest {
     
     static EntityManager em;
-    static ProjectDAO projectDAO;
-    static TaskDAO taskDAO;
+    static ProjectDAO dao;
     Project project;
-;    
+    
     public ProjectDAOTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
-        projectDAO = new ProjectDAO();
-        taskDAO = new TaskDAO();
+        dao = new ProjectDAO();
         em = HibernateUtil.getEntityManager();
-        projectDAO.setEntityManager(em);
-        taskDAO.setEntityManager(em);
+        dao.setEntityManager(em);
     }
     
     @AfterClass
@@ -50,7 +47,7 @@ public class ProjectDAOTest {
     @Before
     public void setUp() {
         em.getTransaction().begin();
-        project = new Project("title", "description", 20);
+        project = new Project("title", "description", 1000L);
     }
     
     @After
@@ -62,7 +59,7 @@ public class ProjectDAOTest {
     public void testInsert(){
         Task task = new Task();
         project.getTasks().add(task);
-        projectDAO.insert(project);
+        dao.insert(project);
         assertNotNull(project.getId());
         assertNotNull(task.getId());
     }
@@ -70,7 +67,7 @@ public class ProjectDAOTest {
     @Test
     public void testUpdate(){
         // insert a project
-        projectDAO.insert(project);
+        dao.insert(project);
         Long id = project.getId();
        
         // modify project.title
@@ -79,10 +76,10 @@ public class ProjectDAOTest {
         Task task = new Task();
         project.getTasks().add(task);
         // update project
-        projectDAO.merge(project);
+        dao.update(project);
         
         // test update
-        Project entity = (Project)projectDAO.find(id);
+        Project entity = (Project)dao.find(id);
         assertEquals("TestProject", entity.getTitle());
         assertTrue(entity.getTasks().size() >= 1);
     }
@@ -93,39 +90,42 @@ public class ProjectDAOTest {
         project.getTasks().add(task);
         
         // insert project with task list
-        projectDAO.insert(project);
+        dao.insert(project);
         Long id = project.getId();
         Long task_id = task.getId();
         
         // deleted project
-        projectDAO.delete(project);
+        dao.delete(project);
         
         // find deleted project
-        Project p = projectDAO.find(id);
+        Project p = dao.find(id);
         assertNull(p);
         
+        // Initialize taskDAO
+        TaskDAO taskDAO = new TaskDAO();
+        taskDAO.setEntityManager(em);
         // find deleted project.task
         Task t = taskDAO.find(task_id);
-        // test task not found
+        // assert not found
         assertNull(t);
     }
     
     @Test 
     public void testFind(){
-        projectDAO.insert(project);
-        Project p = (Project) projectDAO.find(project.getId());
+        dao.insert(project);
+        Project p = (Project) dao.find(project.getId());
         assertEquals(project, p);
+        
     }
     
     @Test
     public void testFindAll(){
         Project a = new Project();
         Project b = new Project();
-        projectDAO.insert(a);
-        projectDAO.insert(b);
+        dao.insert(a);
+        dao.insert(b);
         List<Project> list;
-        list = projectDAO.findAll();
+        list = dao.findAll();
         assertTrue(list.size()>= 2);
     }
-    
 }
