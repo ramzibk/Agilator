@@ -46,10 +46,10 @@ public abstract class Details implements Serializable{
     
     /**
      * A user estimated duration 
-     * This is a positive value representing an amount of time in Seconds
+     * This is a positive value representing an amount of time in days
      * The real duration can be calculated using startTime and endTime values
      */
-    protected long duration; // estimated duration in Seconds
+    protected int duration; // estimated duration in number days
 
 // <editor-fold defaultstate="collapsed" desc=" Getters and Setters ">
     
@@ -99,11 +99,11 @@ public abstract class Details implements Serializable{
         this.endTime = endTime;
     }
     
-    public long getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

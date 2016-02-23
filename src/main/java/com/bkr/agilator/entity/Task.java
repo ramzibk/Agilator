@@ -7,9 +7,6 @@ package com.bkr.agilator.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
@@ -21,11 +18,15 @@ public class Task extends Details implements Serializable {
     
     private Project project;
     
-    public Task(Project project, Long duration, String description){
-        super();
+    public Task(String title, String description, int duration){
+        this();
+        this.title = title;
+        this.duration = duration;
+        this.description = description;
     }
     
     public Task(){
+        super();
     }
     
 //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
@@ -39,5 +40,10 @@ public class Task extends Details implements Serializable {
         this.project = project;
     }
 //</editor-fold>
+
+    @Override
+    public String toString() {
+        return "com.bkr.agilator.entity.Task[ id=" + id +"]";
+    }
     
 }

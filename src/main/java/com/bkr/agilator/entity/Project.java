@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 /**
@@ -27,7 +24,7 @@ public class Project extends Details implements Serializable {
     private List<Task> tasks;
     
     //<editor-fold defaultstate="collapsed" desc="Constructors">
-    public Project(String title, String description, Long duration){
+    public Project(String title, String description, int duration){
         this();
         this.title = title;
         this.description = description;
@@ -42,10 +39,21 @@ public class Project extends Details implements Serializable {
     }
 //</editor-fold>
 
+    public void addTask(Task task){
+        task.setProject(this);
+        tasks.add(task);
+    }
+    
+    public void removeTask(Task task){
+        task.setProject(null);
+        tasks.remove(task);
+    }
     
     // <editor-fold defaultstate="collapsed" desc=" Getters and Setters ">    
     
-    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
+    @OneToMany( mappedBy = "project",
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true)
     public List<Task> getTasks() {
         return this.tasks;
     }
