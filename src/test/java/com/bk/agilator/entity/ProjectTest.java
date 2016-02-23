@@ -6,6 +6,7 @@
 package com.bk.agilator.entity;
 
 import com.bkr.agilator.entity.Project;
+import com.bkr.agilator.entity.Task;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -77,4 +78,22 @@ public class ProjectTest {
         assertFalse(x.equals(null));
     }
     
+    @Test
+    public void testAddTask(){
+        Task task = new Task();
+        task.setId(new Long(1));
+        project.addTask(task);
+        assertNotNull(task.getProject());
+        assertTrue(project.getTasks().contains(task));
+    }
+    
+    @Test
+    public void testRemoveTask(){
+        Task task = new Task();
+        task.setId(new Long(1));
+        project.addTask(task);
+        project.removeTask(task);
+        assertFalse(project.getTasks().contains(task));
+        assertNull(task.getProject());
+    }
 }
