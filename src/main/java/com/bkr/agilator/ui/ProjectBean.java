@@ -47,17 +47,22 @@ public class ProjectBean implements Serializable {
         if(startTime == null){
             return 0.0f;
         }else{
+            long amount_sec;
+            
             if(endTime == null){
-                // calculate time since the start of the project
-                long amount_sec = Duration.between(startTime, currentTime).getSeconds();
-                // convert project duration from days to secs
-                int duration_sec = project.getDuration()*24*3600;
-                // calculate the relation between amout_sec and duration_sec
-                float progress = amount_sec / (float)duration_sec;
-                return progress*100;
+                // duration in seconds beteween the start time until the current time
+                amount_sec = Duration.between(startTime, currentTime).getSeconds();
             }else{
-                return 100;
+                // duration in seconds between the start and the end time
+                amount_sec = Duration.between(startTime, endTime).getSeconds();;
             }
+            
+            // convert project duration from days to secs
+            int duration_sec = project.getDuration()*24*3600;
+            // calculate the relation between amout_sec and duration_sec
+            float progress = amount_sec / (float)duration_sec;
+            
+            return progress*100;
         }
     }
     
@@ -105,6 +110,7 @@ public class ProjectBean implements Serializable {
      * @param event 
      */
     public void submitAdd(ActionEvent event){
+        newProject.setCreationTime(LocalDateTime.now());
         dao.insert(newProject);
         projectsList = dao.findAll();
     }
