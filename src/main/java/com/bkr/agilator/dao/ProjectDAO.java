@@ -12,7 +12,7 @@ import javax.ejb.Stateless;
  *
  * @author Ramzi Ben Khedhiri <bk.ramzi@gmail.com>
  */
-@Stateless
+@Stateless(name = "projectDAO")
 public class ProjectDAO extends AbstractDAO<Project> implements ProjectDAOLocal<Project> {
 
     public ProjectDAO() {
