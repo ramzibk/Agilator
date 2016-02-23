@@ -72,7 +72,6 @@ public class ProjectBean implements Serializable {
     public void start(){
         if(selectedProject != null)
             selectedProject.setStartTime(LocalDateTime.now());
-        if (dao != null)
         dao.merge(selectedProject);
     }
     
@@ -85,13 +84,7 @@ public class ProjectBean implements Serializable {
         
         // set the endTime of the project
         selectedProject.setEndTime(LocalDateTime.now());
-        
-        // update the duration of the selected project
-        LocalDateTime endTime = selectedProject.getEndTime();
-        LocalDateTime startTime = selectedProject.getStartTime();
-
-        if(dao != null)
-            dao.merge(selectedProject);
+        dao.merge(selectedProject);
 
     }
     
@@ -151,26 +144,12 @@ public class ProjectBean implements Serializable {
     public ProjectDAOLocal getDAO() { return dao; }
     
     public Project getNewProject() {
-        if(newProject == null)
-            newProject = new Project();
-        System.err.println("getNewProject() returned "+newProject);
-        return newProject;
+        return newProject; 
     }
-    public void setNewProject(Project newProject) { 
-        this.newProject = newProject;
-        System.err.println("newProject instance updated with "+newProject);
-    }
+    public void setNewProject(Project newProject) { this.newProject = newProject;}
     
     public Project getSelectedProject() { return selectedProject;}
     public void setSelectedProject(Project selectedProject) { this.selectedProject = selectedProject;}
-    
-    public String getStartDate(){
-        return "";
-    }
-    
-    public String getStartTime(){
-        return "";
-    }
     
 //</editor-fold>
     
