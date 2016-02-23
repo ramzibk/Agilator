@@ -47,7 +47,7 @@ public class ProjectDAOTest {
     @Before
     public void setUp() {
         em.getTransaction().begin();
-        project = new Project("title", "description", 1000L);
+        project = new Project("title", "description", 20);
     }
     
     @After
@@ -76,7 +76,7 @@ public class ProjectDAOTest {
         Task task = new Task();
         project.getTasks().add(task);
         // update project
-        dao.update(project);
+        dao.merge(project);
         
         // test update
         Project entity = (Project)dao.find(id);
