@@ -45,7 +45,7 @@ public class TaskDAOTest {
     @Before
     public void setUp() {
         em.getTransaction().begin();
-        task = new Task(null, 1000L, "description");
+        task = new Task(null, "description", 20);
     }
     
     @After
@@ -66,7 +66,7 @@ public class TaskDAOTest {
        
         // modify task
         task.setDescription("TestTask");
-        dao.update(task);        
+        dao.merge(task);        
         
         // test update
         Task t = (Task)dao.find(id);
