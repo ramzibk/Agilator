@@ -12,8 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -45,9 +43,14 @@ public abstract class Details implements Serializable{
     protected LocalDateTime endTime;
     
     /**
+     * the creation time for history purposes
+     */
+    protected LocalDateTime creationTime;
+    
+    /**
      * A user estimated duration 
      * This is a positive value representing an amount of time in days
-     * The real duration can be calculated using startTime and endTime values
+     * The real duration can be calculated using startTime and endTime fields
      */
     protected int duration; // estimated duration in number days
 
@@ -97,6 +100,15 @@ public abstract class Details implements Serializable{
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    @Column
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
     }
     
     public int getDuration() {
