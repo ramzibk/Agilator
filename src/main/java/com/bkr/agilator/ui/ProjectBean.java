@@ -12,8 +12,8 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 
@@ -22,7 +22,7 @@ import javax.inject.Named;
  * @author Ramzi Ben Khedhiri <bk.ramzi@gmail.com>
  */
 
-@ApplicationScoped
+@javax.enterprise.context.SessionScoped
 @Named(value = "projectBean")
 public class ProjectBean implements Serializable {
 
@@ -39,10 +39,16 @@ public class ProjectBean implements Serializable {
     public ProjectBean() {
     }
     
+    @PostConstruct
+    public void init(){
+    }
+    
     public float getProgress(Project project){
         LocalDateTime startTime = project.getStartTime();
         LocalDateTime currentTime = LocalDateTime.now();
         LocalDateTime endTime = project.getEndTime();
+        int duration_sec;
+        float progress;
         
         if(startTime == null){
             return 0.0f;
@@ -57,10 +63,11 @@ public class ProjectBean implements Serializable {
                 amount_sec = Duration.between(startTime, endTime).getSeconds();;
             }
             
-            // convert project duration from days to secs
-            int duration_sec = project.getDuration()*24*3600;
-            // calculate the relation between amout_sec and duration_sec
-            float progress = amount_sec / (float)duration_sec;
+            duration_sec = project.getDuration()*24*3600; // days*hours*(minutes*seconds)
+            if(amount_sec < duration_sec)
+                progress = amount_sec / (float)duration_sec;
+            else // 100% is maximum value
+                progress = 1;
             
             return progress*100;
         }
@@ -85,7 +92,6 @@ public class ProjectBean implements Serializable {
         // set the endTime of the project
         selectedProject.setEndTime(LocalDateTime.now());
         dao.merge(selectedProject);
-
     }
     
     /**
@@ -93,8 +99,7 @@ public class ProjectBean implements Serializable {
      * @return a list of projects
      */
     public List<Project> getAllProjects(){ 
-        if(projectsList == null)
-            projectsList = dao.findAll();
+        projectsList = dao.findAll();
         return projectsList;
     }
     
@@ -105,7 +110,6 @@ public class ProjectBean implements Serializable {
     public void submitAdd(ActionEvent event){
         newProject.setCreationTime(LocalDateTime.now());
         dao.insert(newProject);
-        projectsList = dao.findAll();
     }
     
     /**
