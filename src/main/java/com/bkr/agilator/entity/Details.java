@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 /**
  *
@@ -93,6 +94,7 @@ public abstract class Details implements Serializable{
         this.startTime = startTime;
     }
     
+    @Transient
     public boolean isStarted(){
         return this.startTime != null;
     }
