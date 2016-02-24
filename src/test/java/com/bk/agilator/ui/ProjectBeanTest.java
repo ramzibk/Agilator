@@ -58,8 +58,9 @@ public class ProjectBeanTest {
     
     @Test
     public void testStart(){
-        bean.start();
-        assertNotNull(bean.getSelectedProject().getStartTime());    
+        Project project = new Project();
+        bean.start(project);
+        assertNotNull(project.getStartTime());    
     }
     
     @Test
