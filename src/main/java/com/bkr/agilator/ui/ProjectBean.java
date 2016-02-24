@@ -78,18 +78,19 @@ public class ProjectBean implements Serializable {
      * @param project
      */
     public void start(Project project){
-        if(project != null)
-            project.setStartTime(LocalDateTime.now());
+        if(project == null)
+            return;
+        // set the start time of the project
+        project.setStartTime(LocalDateTime.now());
         dao.merge(project);
     }
     
     /**
      * sets the end time for the selected project
      */
-    public void end(){
-        if(selectedProject == null)
+    public void end(Project project){
+        if(project == null)
             return;
-        
         // set the endTime of the project
         selectedProject.setEndTime(LocalDateTime.now());
         dao.merge(selectedProject);
