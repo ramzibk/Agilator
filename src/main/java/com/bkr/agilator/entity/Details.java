@@ -25,34 +25,34 @@ public abstract class Details implements Serializable{
     /**
      * title is a text value with maximum 60 characters
      */
-    protected String title;
+    protected String title = "";
     
     /**
      * description is a long text value with maximum 400 characters
      */
-    protected String description;
+    protected String description = "";
     
     /**
      * startTime is a local date-time value set automatically on user request
      */
-    protected LocalDateTime startTime;
+    protected LocalDateTime startTime = null;
     
     /**
      * endTime is a local date-time value set automatically on user request
      */
-    protected LocalDateTime endTime;
+    protected LocalDateTime endTime = null;
     
     /**
      * the creation time for history purposes
      */
-    protected LocalDateTime creationTime;
+    protected LocalDateTime creationTime = null;
     
     /**
      * A user estimated duration 
      * This is a positive value representing an amount of time in days
      * The real duration can be calculated using startTime and endTime fields
      */
-    protected int duration; // estimated duration in number days
+    protected int duration = 0; // estimated duration in number days
 
 // <editor-fold defaultstate="collapsed" desc=" Getters and Setters ">
     
@@ -91,6 +91,10 @@ public abstract class Details implements Serializable{
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+    
+    public boolean isStarted(){
+        return this.startTime != null;
     }
 
     @Column
