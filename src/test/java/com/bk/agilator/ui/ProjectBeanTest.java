@@ -65,8 +65,9 @@ public class ProjectBeanTest {
     
     @Test
     public void testEnd(){
-        bean.end();
-        assertNotNull(bean.getSelectedProject().getEndTime());    
+        Project project = new Project();
+        bean.end(project);
+        assertNotNull(project.getEndTime());    
     }
     
     @Test
