@@ -92,8 +92,8 @@ public class ProjectBean implements Serializable {
         if(project == null)
             return;
         // set the endTime of the project
-        selectedProject.setEndTime(LocalDateTime.now());
-        dao.merge(selectedProject);
+        project.setEndTime(LocalDateTime.now());
+        dao.merge(project);
     }
     
     /**
