@@ -75,11 +75,12 @@ public class ProjectBean implements Serializable {
     
     /**
      * sets the start time for the selected project
+     * @param project
      */
-    public void start(){
-        if(selectedProject != null)
-            selectedProject.setStartTime(LocalDateTime.now());
-        dao.merge(selectedProject);
+    public void start(Project project){
+        if(project != null)
+            project.setStartTime(LocalDateTime.now());
+        dao.merge(project);
     }
     
     /**
