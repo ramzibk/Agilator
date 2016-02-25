@@ -41,6 +41,7 @@ public class ProjectBean implements Serializable {
     
     @PostConstruct
     public void init(){
+        newProject = new Project();
     }
     
     public float getProgress(Project project){
@@ -78,22 +79,27 @@ public class ProjectBean implements Serializable {
      * @param project
      */
     public void start(Project project){
+        System.out.println("com.bkr.agilator.ui.ProjectBean.start()");
         if(project == null)
             return;
-        // set the start time of the project
         project.setStartTime(LocalDateTime.now());
         dao.merge(project);
     }
     
     /**
      * sets the end time for the selected project
+     * @param project
      */
     public void end(Project project){
         if(project == null)
             return;
-        // set the endTime of the project
         project.setEndTime(LocalDateTime.now());
         dao.merge(project);
+    }
+    
+    public boolean isStarted(Project project){
+        System.out.println("com.bkr.agilator.ui.ProjectBean.isStarted()");
+        return project.getStartTime() != null;
     }
     
     /**
@@ -112,6 +118,7 @@ public class ProjectBean implements Serializable {
     public void submitAdd(ActionEvent event){
         newProject.setCreationTime(LocalDateTime.now());
         dao.insert(newProject);
+        newProject = new Project();
     }
     
     /**
@@ -131,6 +138,7 @@ public class ProjectBean implements Serializable {
     public void addTask(Task task){
         selectedProject.getTasks().add(task);
         dao.merge(selectedProject);
+        // TODO handle duration change
     }
     
     /**
@@ -154,7 +162,10 @@ public class ProjectBean implements Serializable {
     }
     public void setNewProject(Project newProject) { this.newProject = newProject;}
     
-    public Project getSelectedProject() { return selectedProject;}
+    public Project getSelectedProject() { 
+        System.out.println("com.bkr.agilator.ui.ProjectBean.getSelectedProject()");
+        return selectedProject;
+    }
     public void setSelectedProject(Project selectedProject) { this.selectedProject = selectedProject;}
     
 //</editor-fold>
