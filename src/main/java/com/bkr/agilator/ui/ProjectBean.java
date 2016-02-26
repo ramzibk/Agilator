@@ -98,8 +98,11 @@ public class ProjectBean implements Serializable {
     }
     
     public boolean isStarted(Project project){
-        System.out.println("com.bkr.agilator.ui.ProjectBean.isStarted()");
         return project.getStartTime() != null;
+    }
+    
+    public boolean isDone(Project project){
+        return project.getEndTime() != null;
     }
     
     /**
