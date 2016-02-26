@@ -36,7 +36,7 @@ public class LocalDateTimeConverter implements Converter{
 
     @Override
     public String getAsString(FacesContext fc, UIComponent uic, Object o) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, hh:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm:ss");
         LocalDateTime ldt = (LocalDateTime)o;
         String format = null;
         try{
