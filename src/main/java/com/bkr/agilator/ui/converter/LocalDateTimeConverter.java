@@ -29,7 +29,6 @@ public class LocalDateTimeConverter implements Converter{
             ldt = LocalDateTime.parse(string);
         }catch(DateTimeParseException e){
             FacesContext.getCurrentInstance().getMessageList().add(new FacesMessage(string+" is not valid Date and Time Format"));
-            
         }
         return ldt;
     }
