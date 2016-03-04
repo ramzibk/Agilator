@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 /**
@@ -53,7 +54,8 @@ public class Project extends Details implements Serializable {
     
     @OneToMany( mappedBy = "project",
             cascade = {CascadeType.ALL},
-            orphanRemoval = true)
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
     public List<Task> getTasks() {
         return this.tasks;
     }
