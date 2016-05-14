@@ -6,6 +6,7 @@
 package com.bkr.agilator.dao;
 
 import com.bkr.agilator.entity.Project;
+import java.util.List;
 import javax.ejb.Stateless;
 
 /**
@@ -18,5 +19,4 @@ public class ProjectDAO extends AbstractDAO<Project> implements ProjectDAOLocal<
     public ProjectDAO() {
         super(new Project());
     }
-    
 }

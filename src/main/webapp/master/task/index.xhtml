@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="css/default.css"/>
+        <h:outputStylesheet name="css/cssLayout.css"/>
+        <title>Project Tasks</title>
+    </head>
+
+    <body>
+        <ui:composition template="../../resources/home-template.xhtml">
+            <ui:define name="top">
+                <ui:include src="../menu.xhtml"/>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <p:layout style="min-width:400px;min-height:200px;"
+                              fullPage="true">
+                        <p:layoutUnit header="Project details"
+                                      position="west" 
+                                      resizable="true" size="400" minSize="300">
+                            <p:panel>
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Id: " />
+                                    <h:outputText value="#{projectBean.selectedProject.id}" />
+                                    <h:outputText value="Title: " />
+                                    <h:outputText value="#{projectBean.selectedProject.title}" />
+                                    <h:outputText value="Duration: " />
+                                    <h:outputText value="#{projectBean.selectedProject.duration}" />
+                                    <h:outputText value="Creation: " />
+                                    <h:outputText value="#{projectBean.selectedProject.creationTime}" />
+                                    <h:outputText value="Start: " />
+                                    <h:outputText value="#{projectBean.selectedProject.startTime}" />
+                                    <h:outputText value="End: " />
+                                    <h:outputText value="#{projectBean.selectedProject.endTime}" />
+                                    <h:outputText value="Description: " />
+                                    <h:outputText value="#{projectBean.selectedProject.description}" />
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:layoutUnit>
+
+                        <p:layoutUnit position="center" header="Tasks List">
+                            <ui:include src="create.xhtml"/>
+                            <p:spacer />
+                            <p:spacer />
+                            <ui:include src="view.xhtml"/>
+                        </p:layoutUnit>
+                    </p:layout>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

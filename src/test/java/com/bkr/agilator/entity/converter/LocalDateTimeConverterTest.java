@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bk.agilator.ui.converter;
+package com.bkr.agilator.entity.converter;
 
 import com.bkr.agilator.ui.converter.LocalDateTimeConverter;
-import java.sql.Timestamp;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.format.TextStyle;
 import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 
 /**
  *

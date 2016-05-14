@@ -12,6 +12,6 @@ import javax.ejb.Local;
  * @author Ramzi Ben Khedhiri <bk.ramzi@gmail.com>
  */
 @Local
-public interface TaskDAOLocal<T> extends I_DAO<T>{
+public interface TaskDAOLocal<T> extends DAO<T>{
     
 }

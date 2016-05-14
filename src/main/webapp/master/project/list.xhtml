@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="css/default.css"/>
+        <h:outputStylesheet name="css/cssLayout.css"/>
+        <title>list Page</title>
+    </head>
+
+    <body>
+        <ui:composition>
+            <p:dataGrid id="projectDT" 
+                        var="project" 
+                        value="#{projectBean.projectsList}"
+                        rows="4">
+                <p:panelGrid>
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="2">
+                                <h:outputText value="#{project.title}" />
+                            </p:column>
+                        </p:row>
+                    </f:facet>
+
+                    <p:row>
+                        <p:column colspan="1"><h:outputText value="ID: " /></p:column>
+                        <p:column colspan="1"><h:outputText value="#{project.id}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="1"><h:outputText value="Duration: " /></p:column>
+                        <p:column colspan="1"><h:outputText value="#{project.duration}" /> </p:column>   
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="1"><h:outputText value="Creation: " /></p:column>
+                        <p:column colspan="1">
+                            <h:outputText value="#{project.creationTime}">
+                                <f:converter converterId="ui.LocalDateTimeConverter"/>
+                            </h:outputText></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="1"><h:outputText value="Start: " /></p:column>
+                        <p:column colspan="1">
+                            <h:outputText value="#{project.startTime}">
+                                <f:converter converterId="ui.LocalDateTimeConverter"/>
+                            </h:outputText></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="1"><h:outputText value="End: " /></p:column>
+                        <p:column colspan="1">
+                            <h:outputText value="#{project.endTime}">
+                                <f:converter converterId="ui.LocalDateTimeConverter"/>
+                            </h:outputText></p:column>
+                    </p:row>
+
+                    <p:row rendered="#{projectBean.getState(project) == 'STARTED'}">
+                        <p:column colspan="2">
+                            <p:progressBar labelTemplate="{value}%" value="#{projectBean.getProgress(project)}"/>
+                        </p:column>
+                    </p:row>
+
+
+                    <f:facet name="footer">
+                        <p:row>
+                            <p:column colspan="2" style="text-align: center">
+                                <p:commandButton value="Start"
+                                                 icon="ui-icon-play"
+                                                 action="#{projectBean.submitStart()}"
+                                                 rendered="#{projectBean.getState(project) == 'NEW'}">
+                                    <f:setPropertyActionListener value="#{project}"
+                                                                 target="#{projectBean.selectedProject}"/>               
+                                </p:commandButton>
+
+                                <p:commandButton value="End"
+                                                 icon="ui-icon-stop"
+                                                 action="#{projectBean.submitEnd()}"
+                                                 rendered="#{projectBean.getState(project) == 'STARTED'}">
+                                    <f:setPropertyActionListener value="#{project}"
+                                                                 target="#{projectBean.selectedProject}"/>
+                                </p:commandButton>
+                                
+                                <p:commandButton icon="ui-icon-trash"
+                                                 process="@this"
+                                                 update=":projectForm:confirmDialog"
+                                                 oncomplete="PF('confirmDialogWdg').show()">
+                                    <f:setPropertyActionListener value="#{project}" 
+                                                                 target="#{projectBean.selectedProject}"/>
+                                </p:commandButton>
+
+                                <p:commandButton icon="ui-icon-search"
+                                                 action="/master/task/index.xhtml">
+                                    <f:setPropertyActionListener value="#{project}" 
+                                                                 target="#{projectBean.selectedProject}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:row>
+                    </f:facet>
+                </p:panelGrid>
+            </p:dataGrid>
+
+            <p:confirmDialog id="confirmDialog" 
+                             message="Are sure you want to delete project with id = #{projectBean.selectedProject.id} ?"
+                             header="Confirm"
+                             severity="alert"
+                             widgetVar="confirmDialogWdg"
+                             closable="false">
+                    <p:commandButton value="Yes" 
+                                 action="#{projectBean.submitDelete()}"
+                                 update=":projectForm:growl, :projectForm:projectDT"
+                                 oncomplete="PF('confirmDialogWdg').hide()" />
+                    <p:commandButton value="Cancel"
+                                 action="#{projectBean.cancelDelete()}"
+                                 oncomplete="PF('confirmDialogWdg').hide()"/>
+            </p:confirmDialog>
+
+            <p:dialog id="detailsDialog"
+                      header="Project Details" 
+                      widgetVar="detailsDialogWdg" 
+                      modal="true" 
+                      showEffect="fade" hideEffect="fade" resizable="false">
+
+                <h:panelGrid  columns="2" 
+                              rendered="#{not empty projectBean.selectedProject}" 
+                              columnClasses="label,value">
+
+                    <h:outputText value="Id: " />
+                    <h:outputText value="#{projectBean.selectedProject.id}" />
+
+                    <h:outputText value="Started: "/>
+                    <h:panelGroup>
+                        <h:commandButton value="Start"
+                                         action="#{projectBean.submitStart()}"
+                                         rendered="#{projectBean.getState(selectedProject) == 'NEW'}"/>
+                        <h:outputText value="#{projectBean.selectedProject.startTime}"
+                                      rendered="#{projectBean.getState(selectedProject) == 'STARTED' or
+                                                  projectBean.getState(selectedProject) == 'DONE'}">
+                            <f:converter converterId="ui.LocalDateTimeConverter"/>
+                        </h:outputText>
+                    </h:panelGroup>
+
+                    <h:outputText value="Ended: "/>
+                    <h:panelGroup>
+                        <h:commandButton value="End"
+                                         action="#{projectBean.submitEnd()}"
+                                         rendered="#{projectBean.getState(selectedProject) == 'STARTED'}"/>
+                        <h:outputText value="#{projectBean.selectedProject.endTime}"
+                                      rendered="#{projectBean.getState(selectedProject) == 'DONE'}">
+                            <f:converter converterId="ui.LocalDateTimeConverter"/>
+                        </h:outputText>
+                    </h:panelGroup>
+
+                    <h:outputText value="Description: " />
+                    <h:outputText value="#{projectBean.selectedProject.description}" />
+
+                </h:panelGrid>
+            </p:dialog>
+        </ui:composition>
+    </body>
+</html>

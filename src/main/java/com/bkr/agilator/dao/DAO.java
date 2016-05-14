@@ -12,13 +12,15 @@ import java.util.List;
  * @author Ramzi Ben Khedhiri <bk.ramzi@gmail.com>
  * @param <T>
  */
-public interface I_DAO<T> {
+public interface DAO<T> {
     
     void insert(T o);
     
     T find(Long id);
     
     T merge(T o);
+    
+    boolean contains(T o);
     
     void delete(T o);
     

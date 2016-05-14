@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bk.agilator.dao;
+package com.bkr.agilator.dao;
 
 import Utils.HibernateUtil;
 import com.bkr.agilator.dao.TaskDAO;
+import com.bkr.agilator.entity.Project;
 import com.bkr.agilator.entity.Task;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -45,7 +46,6 @@ public class TaskDAOTest {
     @Before
     public void setUp() {
         em.getTransaction().begin();
-        task = new Task(null, "description",20);
     }
     
     @After
@@ -55,39 +55,55 @@ public class TaskDAOTest {
     
     @Test
     public void testInsert(){
+        Project project = new Project(1l);
+        task = new Task(project);
         dao.insert(task);
         assertNotNull(task.getId());
     }
     
     @Test
     public void testUpdate(){
+        task = new Task();
         dao.insert(task);
         Long id = task.getId();
        
-        // modify task
-        task.setDescription("TestTask");
+        // modify the task
+        String desc = "new description";
+        task.setDescription(desc);
+        int duration = 1;
+        task.setDuration(duration);
         dao.merge(task);        
         
         // test update
         Task t = (Task)dao.find(id);
-        assertEquals("TestTask", t.getDescription());
+        assertEquals(desc, t.getDescription());
+        assertEquals(duration, t.getDuration());
     }
 
     @Test
     public void testDelete(){
+        task = new Task();
         dao.insert(task);
         Long id = task.getId();
-        dao.delete(task);
+        // verify task was created
+        assertNotNull(id); 
+        // delete the task
+        dao.delete(task); 
+        // try to find it by id
         Task t = dao.find(id);
-        // assert not found
-        assertNull(t);
+        // verify task was not found
+        assertNull(t); 
     }
     
     @Test 
     public void testFind(){
+        task = new Task();
         dao.insert(task);
-        Task t = (Task) dao.find(task.getId());
-        assertEquals(task, t);
+        // verify task was created
+        assertNotNull(task.getId());
+        // find the added task
+        Task found = (Task) dao.find(task.getId());
+        assertEquals(task, found);
     }
     
     @Test
@@ -99,5 +115,7 @@ public class TaskDAOTest {
         List<Task> list;
         list = dao.findAll();
         assertTrue(list.size()>= 2);
+        assertTrue(list.contains(a));
+        assertTrue(list.contains(b));
     }
 }

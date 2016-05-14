@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bk.agilator.dao;
+package com.bkr.agilator.dao;
 
 import Utils.HibernateUtil;
 import com.bkr.agilator.dao.ProjectDAO;
@@ -65,7 +65,7 @@ public class ProjectDAOTest {
     }
     
     @Test
-    public void testUpdate(){
+    public void testMerge(){
         // insert a project
         dao.insert(project);
         Long id = project.getId();
@@ -74,7 +74,7 @@ public class ProjectDAOTest {
         project.setTitle("TestProject");
         // modify project.tasks
         Task task = new Task();
-        project.getTasks().add(task);
+        project.addTask(task);
         // update project
         dao.merge(project);
         
@@ -86,15 +86,16 @@ public class ProjectDAOTest {
     
     @Test
     public void testDelete(){
+        // initialize project with a task list
         Task task = new Task();
         project.getTasks().add(task);
         
-        // insert project with task list
+        // insert project with a task list
         dao.insert(project);
         Long id = project.getId();
         Long task_id = task.getId();
         
-        // deleted project
+        // delete project
         dao.delete(project);
         
         // find deleted project
@@ -104,6 +105,7 @@ public class ProjectDAOTest {
         // Initialize taskDAO
         TaskDAO taskDAO = new TaskDAO();
         taskDAO.setEntityManager(em);
+        
         // find deleted project.task
         Task t = taskDAO.find(task_id);
         // assert not found

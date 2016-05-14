@@ -25,6 +25,10 @@ public class Task extends Details implements Serializable {
         this.description = description;
     }
     
+    public Task(Project project){
+        this.project = project;
+    }
+    
     public Task(){
         super();
     }
@@ -43,7 +47,7 @@ public class Task extends Details implements Serializable {
 
     @Override
     public String toString() {
-        return "com.bkr.agilator.entity.Task[ id=" + id +"]";
+        return ""+id;
     }
     
 }

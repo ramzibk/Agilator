@@ -8,6 +8,7 @@ package com.bkr.agilator.dao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TransactionRequiredException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,7 +19,7 @@ import javax.persistence.criteria.Root;
  * @author Ramzi Ben Khedhiri <bk.ramzi@gmail.com>
  * @param <T>
  */
-public abstract class AbstractDAO <T> implements I_DAO<T>{
+public abstract class AbstractDAO <T> implements DAO<T>{
     
     T entity;
     Class<T> type;
@@ -43,7 +44,8 @@ public abstract class AbstractDAO <T> implements I_DAO<T>{
     
     @Override
     public void insert(T o){
-        em.persist(o);
+        if(o != null)
+            em.persist(o);
     }
 
     @Override
@@ -53,12 +55,26 @@ public abstract class AbstractDAO <T> implements I_DAO<T>{
 
     @Override
     public T merge(T o) {
-        return em.merge(o);
+        if(o != null)
+            o = em.merge(o);
+        return o;
     }
 
     @Override
     public void delete(T o) {
-        em.remove(o);
+        if(o != null){
+            try{
+                em.remove(o);
+                o = null;
+            }catch(IllegalArgumentException iae){
+                o = em.merge(o);
+                em.remove(o);
+            }
+        }
+    }
+    
+    public boolean contains(T o){
+        return em.contains(o);
     }
 
     @Override

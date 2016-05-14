@@ -72,7 +72,6 @@ public abstract class Details implements Serializable{
     }
     
     public void setTitle(String title) {
-        System.err.println("setTitle: "+title);
         this.title = title;
     }
     
@@ -81,7 +80,6 @@ public abstract class Details implements Serializable{
     }
     
     public void setDescription(String description) {
-        System.err.println("setDescription: "+description);
         this.description = description;
     }
     
@@ -92,11 +90,6 @@ public abstract class Details implements Serializable{
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
-    }
-    
-    @Transient
-    public boolean isStarted(){
-        return this.startTime != null;
     }
 
     @Column

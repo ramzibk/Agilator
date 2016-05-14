@@ -4,24 +4,14 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <jta-data-source>java:app/agilator_db</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/agilator" />
-      <property name="javax.persistence.jdbc.user" value="admin"/>
-      <property name="javax.persistence.jdbc.password" value="root"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.show_sql" value="true"/>
-      <property name="hibernate.transaction.jta.platform"
-                value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
-    </properties>
+    
   </persistence-unit>
-  
-   <!--Test Persistenec Unit -->
+  <!--Test Persistenec Unit -->
   <persistence-unit name="Agilator_TEST_PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/agilator_test_db" />
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/agilator_test_db"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

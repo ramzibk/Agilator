@@ -41,8 +41,8 @@ public class Project extends Details implements Serializable {
 //</editor-fold>
 
     public void addTask(Task task){
-        task.setProject(this);
         tasks.add(task);
+        task.setProject(this);
     }
     
     public void removeTask(Task task){
@@ -87,6 +87,6 @@ public class Project extends Details implements Serializable {
 
     @Override
     public String toString() {
-        return "com.bkr.agilator.jpa.Project[ id=" + id +"]";
+        return ""+id;
     }
 }

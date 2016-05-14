@@ -33,14 +33,6 @@
             <url>http://repository.primefaces.org</url>
             <layout>default</layout>
         </repository>
-        
-    <!-- JaCoCo Repository -->    
-<!--        <repository>
-            <id>JaCoCo-repo</id>
-            <name>JaCoCo Maven Repository</name>
-            <url>http://repo1.maven.org/maven2/</url>
-            <layout>default</layout>
-        </repository>-->
     </repositories>
     
     <dependencies>
@@ -51,16 +43,11 @@
             <version>${primefaces.version}</version>
         </dependency>
     <!-- Primefaces Themes -->              
-        <dependency>              
+        <!--dependency>              
             <groupId>org.primefaces.themes</groupId>  
             <artifactId>cupertino</artifactId>              
             <version>${themes.version}</version> 
-        </dependency> 
-        <dependency>  
-            <groupId>org.primefaces.themes</groupId>  
-            <artifactId>le-frog</artifactId>  
-            <version>${themes.version}</version> 
-        </dependency>         
+        </dependency-->        
         <dependency>  
             <groupId>org.primefaces.themes</groupId>  
             <artifactId>sam</artifactId>  
@@ -68,24 +55,9 @@
         </dependency> 
         <dependency>  
             <groupId>org.primefaces.themes</groupId>  
-            <artifactId>pepper-grinder</artifactId>  
-            <version>${themes.version}</version> 
-        </dependency> 
-        <dependency>  
-            <groupId>org.primefaces.themes</groupId>  
             <artifactId>smoothness</artifactId>  
             <version>${themes.version}</version> 
         </dependency>        
-        <dependency>  
-            <groupId>org.primefaces.themes</groupId>  
-            <artifactId>ui-lightness</artifactId>  
-            <version>${themes.version}</version> 
-        </dependency> 
-        <dependency>  
-            <groupId>org.primefaces.themes</groupId>  
-            <artifactId>south-street</artifactId>  
-            <version>${themes.version}</version> 
-        </dependency>
         
     <!-- JSF dependencies-->
         <dependency>
@@ -119,7 +91,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.38</version>
+            <version>5.1.35</version>
         </dependency>
 
     <!-- Test dependencies-->

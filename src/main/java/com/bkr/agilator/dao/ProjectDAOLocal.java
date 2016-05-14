@@ -5,6 +5,7 @@
  */
 package com.bkr.agilator.dao;
 
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -12,6 +13,6 @@ import javax.ejb.Local;
  * @author Ramzi Ben Khedhiri <bk.ramzi@gmail.com>
  */
 @Local
-public interface ProjectDAOLocal<T> extends I_DAO<T>{
+public interface ProjectDAOLocal<T> extends DAO<T>{
     
 }

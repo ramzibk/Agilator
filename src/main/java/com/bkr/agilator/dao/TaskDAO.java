@@ -12,8 +12,8 @@ import javax.ejb.Stateless;
  *
  * @author Ramzi Ben Khedhiri <bk.ramzi@gmail.com>
  */
-@Stateless
-public class TaskDAO extends AbstractDAO<Task> implements ProjectDAOLocal<Task> {
+@Stateless(name = "taskDAO")
+public class TaskDAO extends AbstractDAO<Task> implements TaskDAOLocal<Task> {
 
     public TaskDAO() {
         super(new Task());
